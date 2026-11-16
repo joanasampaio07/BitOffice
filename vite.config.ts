@@ -20,7 +20,7 @@ export default defineConfig({
     rollupOptions: { input: { main: r('./client/index.html') } },
   },
   server: {
-    port: Number(process.env.VITE_PORT ?? 5173),
+    port: Number(process.env.VITE_PORT ?? 5174),
     proxy: {
       '/api': { target: `http://127.0.0.1:${process.env.HABBLAUD_PORT ?? 4747}` },
     },
