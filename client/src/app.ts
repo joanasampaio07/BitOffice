@@ -21,7 +21,7 @@ export function start(): void {
   );
 
   const params = new URLSearchParams(location.search);
-  const store = new OfficeStore({ mock: params.has('mock') });
+  const store = new OfficeStore({ mock: params.has('mock') || (typeof location !== 'undefined' && location.hostname.endsWith('github.io')) });
   const worldCanvas = document.getElementById('world') as HTMLCanvasElement;
   const uiRoot = document.getElementById('ui') as HTMLElement;
   const world = createWorld(worldCanvas, store);
