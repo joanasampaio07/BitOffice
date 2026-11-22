@@ -74,7 +74,7 @@ export function layoutReception(): AreaLayout {
 export function layoutRestroom(): AreaLayout {
   const b = new AreaBuilder(RESTROOM_ID, 'restroom', { x: 0, y: SOUTH_Y, w: COL_W, h: ROOM_H });
   const wall = CORE_WALLS.restroom;
-  b.floor('wood_light', 0, 0, 16, 12, 201);
+  b.floor('wood', 0, 0, 16, 12, 201);
   b.rug(4, 4, 8, 5, '#4c6d9e', 202);
   b.face(0.5, 15, wall, [{ lx: 7, w: 2 }]);
   b.wall('door_frame', 8, undefined, { order: 0.05 });
@@ -90,16 +90,16 @@ export function layoutRestroom(): AreaLayout {
   b.wall('clock', 12, undefined, { order: 0.5 });
 
   // Mesa central de reunião (2 mesas grandes lado a lado)
-  b.furn('dining_table', 5, 5, undefined, { order: 0.4 });
-  b.furn('dining_table', 8, 5, undefined, { order: 0.41 });
+  b.furn('cafe_table', 5, 5, undefined, { order: 0.4 });
+  b.furn('cafe_table', 8, 5, undefined, { order: 0.41 });
 
   // Cadeiras ao redor da mesa para todos sentarem (10 lugares)
   for (const lx of [5, 6, 8, 9]) {
-    b.seat('chair', 'chair', lx, 4, 'down', 'down', { order: 0.35 });
-    b.seat('chair', 'chair', lx, 7, 'up', 'up', { order: 0.55 });
+    b.seat('armchair', 'armchair', lx, 4, 'down', 'down', { order: 0.35 });
+    b.seat('armchair', 'armchair', lx, 7, 'up', 'up', { order: 0.55 });
   }
-  b.seat('chair', 'chair', 4, 5.5, 'right', 'right', { order: 0.45 });
-  b.seat('chair', 'chair', 10.5, 5.5, 'left', 'left', { order: 0.46 });
+  b.seat('armchair', 'armchair', 4, 5.5, 'right', 'right', { order: 0.45 });
+  b.seat('armchair', 'armchair', 10.5, 5.5, 'left', 'left', { order: 0.46 });
 
   // Plantas e bebedouro nos cantos
   b.furn('plant_tall', 1, 2, 'ficus', { order: 0.21 });
