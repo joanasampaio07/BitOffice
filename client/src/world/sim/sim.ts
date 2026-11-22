@@ -487,6 +487,26 @@ export class Sim {
     ch.placeAtTile(p.x, p.y);
   }
 
+  /** Chama os personagens (todos ou os IDs informados) para os assentos da Sala de Reunião (`core:banheiros`). */
+  callMeeting(agentIds?: string[]): void {
+    const seats = [...this.spots.all()].filter((s) => s.areaId === 'core:banheiros' && s.seated);
+    if (!seats.length) return;
+    const filter = agentIds?.length ? new Set(agentIds) : null;
+    let idx = 0;
+    for (const ch of this.chars.values()) {
+      if (filter && !filter.has(ch.id)) continue;
+      const seat = seats[idx % seats.length];
+      idx++;
+      ch.queue.length = 0;
+      if (ch.seated) ch.queue.push({ t: 'exit' });
+      if (this.spots.reserve(seat.id, ch.id)) {
+        ch.tempSpots.push(seat.id);
+        ch.queue.push({ t: 'enter', spot: seat.id });
+        ch.queue.push({ t: 'act', pose: 'sit', ms: 20_000 });
+      }
+    }
+  }
+
   private snapTo(ch: Character, s: SpotDef): void {
     ch.tx = s.tx;
     ch.ty = s.ty;

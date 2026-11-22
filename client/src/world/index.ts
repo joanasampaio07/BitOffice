@@ -68,6 +68,9 @@ export function createWorld(canvas: HTMLCanvasElement, store: OfficeStore, o: Cr
   const soundCbs = new Set<(c: SoundCue) => void>();
   const roomMenuCbs = new Set<(roomId: string, at: { x: number; y: number }) => void>();
   let cues = new SoundCues(sim, camera);
+  if (typeof window !== 'undefined') {
+    window.addEventListener('bitoffice:meeting', () => sim.callMeeting());
+  }
   let selection: Selection = null;
   let hover: string | null = null;
   let mouse: { x: number; y: number } | null = null;
