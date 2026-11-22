@@ -124,6 +124,7 @@ export class TopBar implements UiComponent {
       iconButton(ICONS.overview, tr('Visão geral (O)'), () => ctx.camera('overview')),
       iconButton(ICONS.zoomOut, tr('Afastar (−)'), () => ctx.camera('zoomOut')),
       iconButton(ICONS.zoomIn, tr('Aproximar (+)'), () => ctx.camera('zoomIn')),
+      iconButton(ICONS.office, tr('Chamar todos para a Sala de Reunião'), () => window.dispatchEvent(new CustomEvent('bitoffice:meeting'))),
     );
     const panelGroup = h(
       'div',
