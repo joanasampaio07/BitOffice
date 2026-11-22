@@ -74,9 +74,8 @@ export function layoutReception(): AreaLayout {
 export function layoutRestroom(): AreaLayout {
   const b = new AreaBuilder(RESTROOM_ID, 'restroom', { x: 0, y: SOUTH_Y, w: COL_W, h: ROOM_H });
   const wall = CORE_WALLS.restroom;
-  b.floor('tile_white', 0, 0, 16, 12, 201);
-  // tapetinho só na frente das pias (nada de tapete grande no meio do banheiro)
-  b.rug(2, 3.15, 3, 0.85, '#6fa3b8', 202);
+  b.floor('wood_light', 0, 0, 16, 12, 201);
+  b.rug(4, 4, 8, 5, '#4c6d9e', 202);
   b.face(0.5, 15, wall, [{ lx: 7, w: 2 }]);
   b.wall('door_frame', 8, undefined, { order: 0.05 });
   b.south(0.5, 15, 11, { ...wall, exterior: true });
@@ -86,32 +85,29 @@ export function layoutRestroom(): AreaLayout {
   b.walk(7, 0, 2, 2);
   b.area.door = { x: 7, y: SOUTH_Y, w: 2, h: 2 };
 
-  // pias com espelho
-  for (let i = 0; i < 3; i++) {
-    b.wall('mirror', 2.5 + i, undefined, { order: 0.3 });
-    b.furn('sink', 2 + i, 2, undefined, { order: 0.35 });
-    b.spot('sink', 2 + i, 3, 'up', { dy: -3 });
-  }
-  b.furn('trash_bin', 5, 2, undefined, { order: 0.4 });
-  b.furn('plant_small', 1, 2, 'fern', { order: 0.2 });
-  b.wall('clock', 6, undefined, { order: 0.5 });
+  // Quadro e relógio na parede norte da Sala de Reunião
+  b.wall('poster', 3, 'cat', { order: 0.45 });
+  b.wall('clock', 12, undefined, { order: 0.5 });
 
-  // cabines encostadas na parede norte (entram pela porta ao sul e somem)
-  for (let i = 0; i < 3; i++) {
-    const lx = 9 + i * 2;
-    const stall = b.furn('toilet_stall', lx, 2, undefined, { order: 0.3 + i * 0.05 });
-    b.spot('stall', lx, 4, 'up', { furnitureId: stall, x: b.px(lx + 1), y: b.py(4) - 3, sortY: b.py(4) - 0.5 });
+  // Mesa central de reunião (2 mesas grandes lado a lado)
+  b.furn('dining_table', 5, 5, undefined, { order: 0.4 });
+  b.furn('dining_table', 8, 5, undefined, { order: 0.41 });
+
+  // Cadeiras ao redor da mesa para todos sentarem (10 lugares)
+  for (const lx of [5, 6, 8, 9]) {
+    b.seat('chair', 'chair', lx, 4, 'down', 'down', { order: 0.35 });
+    b.seat('chair', 'chair', lx, 7, 'up', 'up', { order: 0.55 });
   }
-  b.wall('poster', 1.5, 'cat', { order: 0.5 });
-  b.furn('plant_small', 14, 6, 'succulent', { order: 0.2 });
-  b.furn('plant_tall', 1, 10, 'ficus', { order: 0.21 });
-  b.furn('plant_tall', 14, 10, 'monstera', { order: 0.22 });
-  const bench = b.furn('bench', 3, 9, undefined, { order: 0.5 });
-  for (let i = 0; i < 2; i++) b.seat('bench', 'bench', 3 + i, 9, 'down', undefined, { noFurniture: true, furnitureId: bench });
-  b.furn('trash_bin', 9, 10, undefined, { order: 0.6 });
-  b.rug(2.5, 9.9, 3, 0.9, '#9cc3cf', 203);
-  b.furn('plant_small', 1, 6, 'flower', { order: 0.24 });
-  b.furn('plant_small', 12, 10, 'fern', { order: 0.25 });
+  b.seat('chair', 'chair', 4, 5.5, 'right', 'right', { order: 0.45 });
+  b.seat('chair', 'chair', 10.5, 5.5, 'left', 'left', { order: 0.46 });
+
+  // Plantas e bebedouro nos cantos
+  b.furn('plant_tall', 1, 2, 'ficus', { order: 0.21 });
+  b.furn('plant_tall', 14, 2, 'monstera', { order: 0.22 });
+  b.furn('plant_tall', 1, 10, 'palm', { order: 0.23 });
+  b.furn('plant_small', 14, 10, 'fern', { order: 0.25 });
+  b.furn('water_cooler', 2, 2, undefined, { order: 0.3 });
+  b.spot('water', 2, 3, 'up', { dy: -3 });
   return b.build();
 }
 
