@@ -674,18 +674,24 @@ export class Renderer {
   /** Placa com o nome (o texto nítido é escrito pelo overlay em espaço de tela). */
   private drawSign(vis: AreaVis, w: WallVis, slide: number): void {
     const { ctx } = this;
-    if (!vis.room && this.assets?.signage && vis.id === 'core:recepcao') {
-      const a = this.assets.signage;
-      const maxW = 5 * TILE;
-      const maxH = 24;
-      // escala inteira (pixels nítidos) sempre que couber
-      const fit = Math.min(maxW / a.w, maxH / a.h);
-      const k = fit >= 1 ? Math.floor(fit) : fit;
-      const dw = Math.round(a.w * k);
-      const dh = Math.round(a.h * k);
+    if (!vis.room && vis.id === 'core:recepcao') {
+      const dw = 112;
+      const dh = 22;
+      const x = Math.round(w.cx - dw / 2);
+      const y = Math.round(w.baseY - 8 - dh) + slide;
       ctx.save();
-      ctx.imageSmoothingEnabled = k < 1;
-      ctx.drawImage(a.img, Math.round(w.cx - dw / 2), Math.round(w.baseY - 8 - dh) + slide, dw, dh);
+      ctx.fillStyle = '#1b2236';
+      ctx.fillRect(x, y, dw, dh);
+      ctx.strokeStyle = '#fac665';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(x + 0.5, y + 0.5, dw - 1, dh - 1);
+      ctx.font = 'bold 13px "Pixelify Sans", monospace';
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#f4f1ea';
+      ctx.fillText('Bit', w.cx - 19, y + dh / 2 + 1);
+      ctx.fillStyle = '#fac665';
+      ctx.fillText('Office', w.cx + 12, y + dh / 2 + 1);
       ctx.restore();
       return;
     }
