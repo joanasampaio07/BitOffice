@@ -48,7 +48,7 @@ const OVERVIEW_TOTAL = 4;
 
 const CORE_NAMES: Record<string, string> = {
   'core:recepcao': tr('Recepção'),
-  'core:banheiros': tr('Banheiros'),
+  'core:banheiros': tr('Sala de Reunião'),
   'core:copa': tr('Copa'),
   'core:lounge': tr('Lounge'),
 };
