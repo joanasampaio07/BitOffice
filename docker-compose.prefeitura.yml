@@ -1,0 +1,24 @@
+services:
+  bitoffice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bitoffice-prefeitura
+    ports:
+      - "4747:4747"
+    environment:
+      - NODE_ENV=production
+      - HABBLAUD_PORT=4747
+    restart: unless-stopped
+
+  msbot:
+    build:
+      context: ../../OpenMausBot-main/OpenMausBot-main
+      dockerfile: Dockerfile
+    container_name: msbot-prefeitura
+    environment:
+      - NODE_ENV=production
+      - BITOFFICE_URL=http://bitoffice:4747
+    depends_on:
+      - bitoffice
+    restart: unless-stopped

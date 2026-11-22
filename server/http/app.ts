@@ -4,6 +4,7 @@ import { NAME_MAX, parseAppearanceParts, parseCharacterName, parseSeed } from '.
 import type { AccessInfo, AgentInfo, ModSummary, OfficeSnapshot, SourceInfo, UpdateStatus } from '../../shared/types';
 import type { AccountsService } from '../accounts/service';
 import { handleCodexEvent } from '../codex/http';
+import { handleBotEventsRoute } from './bot-events';
 import type { DayStatsService } from '../history/daystats';
 import type { Office } from '../model/office';
 import type { CodexLive } from '../sources/codex/live';
@@ -477,6 +478,10 @@ export function createApiHandler(deps: ApiDeps): (req: IncomingMessage, res: Ser
         }
         handleCharacter(req, res, id, method).catch((err) => fail(res, err));
       }
+      return true;
+    }
+    if (path === '/api/bot-events') {
+      handleBotEventsRoute(req, res).catch((err) => fail(res, err));
       return true;
     }
     if (path === '/api/codex/events') {
