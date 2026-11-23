@@ -30,7 +30,7 @@ jobs:
       - name: Build client
         run: npx vite build --config vite.config.ts --base=/BitOffice/
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./dist/client
 
